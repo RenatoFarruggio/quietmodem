@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new MyTask().execute("INPUT");
+        new MyAsyncTask().execute("INPUT");
 
         // Create an ASYNCTASK according to sample on
         //  https://www.toptal.com/android/android-threading-all-you-need-to-know
@@ -51,12 +51,50 @@ public class MainActivity extends AppCompatActivity {
         //        }
         //
 
+
+//        public class ExampleActivity extends Activity{
+//
+//            @Override
+//            protected void onCreate(Bundle savedInstanceState) {
+//                super.onCreate(savedInstanceState);
+//
+//                getLoaderManager().initLoader(1, null, new MyLoaderCallbacks());
+//            }
+//
+//            private class MyLoaderCallbacks implements LoaderManager.LoaderCallbacks {
+//
+//                @Override
+//                public Loader onCreateLoader(int id, Bundle args) {
+//                    return new MyLoader(ExampleActivity.this);
+//                }
+//
+//                @Override
+//                public void onLoadFinished(Loader loader, Object data) {   }
+//
+//                @Override
+//                public void onLoaderReset(Loader loader) {   }
+//            }
+//
+//            private class MyLoader extends AsyncTaskLoader {
+//
+//                public MyLoader(Context context) {
+//                    super(context);
+//                }
+//
+//                @Override
+//                public Object loadInBackground() {
+//                    return someWorkToDo();
+//                }
+//
+//            }
+//        }
+
     }
 
-    // This task will run doSomeWork 5 times and then run onPostExecute once.
-    // This also happens, if you click home button at any time.
-    // This however does NOT happen if you stop the app by brute-force.
-    private class MyTask extends AsyncTask<String, Void, String> {
+    /** This task will run doSomeWork 5 times and then run onPostExecute once.
+     *  This also happens, if you click home button at any time.
+     *  This however does NOT happen if you stop the app by brute-force. */
+    private class MyAsyncTask extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... params) {
