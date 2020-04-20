@@ -2,6 +2,7 @@ package ch.punocchio.quietclient;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
@@ -19,9 +20,75 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        new MyTask().execute("INPUT");
+
+        // Create an ASYNCTASK according to sample on
+        //  https://www.toptal.com/android/android-threading-all-you-need-to-know
+        //
+        //        public class ExampleActivity extends Activity {
+        //
+        //            @Override
+        //            protected void onCreate(Bundle savedInstanceState) {
+        //                super.onCreate(savedInstanceState);
+        //
+        //                new MyTask().execute(url);
+        //            }
+        //
+        //            private class MyTask extends AsyncTask<String, Void, String> {
+        //
+        //                @Override
+        //                protected String doInBackground(String... params) {
+        //                    String url = params[0];
+        //                    return doSomeWork(url);
+        //                }
+        //
+        //                @Override
+        //                protected void onPostExecute(String result) {
+        //                    super.onPostExecute(result);
+        //                    // do something with result
+        //                }
+        //            }
+        //        }
+        //
 
     }
+
+    // This task will run doSomeWork 5 times and then run onPostExecute once.
+    // This also happens, if you click home button at any time.
+    // This however does NOT happen if you stop the app by brute-force.
+    private class MyTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String url = params[0];
+            for (int i = 0; i < 5; i++) {
+                doSomeWork(url);
+                SystemClock.sleep(5000);
+            }
+            return "OK";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            // do something with result
+            Log.d("MainActivity", "onPostExecute started.");
+            Log.d("MainActivity", "RESULT: " + result);
+        }
+
+        private String doSomeWork(String text) {
+            Log.d("MainActivity", "Do SomeWork started.");
+            Log.d("MainActivity", text);
+            return "OK";
+        }
+    }
+
+
 }
+
+
+
+// OLD STUFF
         /*
         // Use PCAB for log (and feed). We don't have anything to do with that.
         // Use CBOR for log entries. We use them in our interface:
