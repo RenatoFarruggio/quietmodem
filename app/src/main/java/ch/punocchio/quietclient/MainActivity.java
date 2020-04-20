@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 doSomeWork(url);
                 SystemClock.sleep(5000);
             }
-            return "OK";
+            return "RETURN of doInBackground";
         }
 
         @Override
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         private String doSomeWork(String text) {
             Log.d("MainActivity", "Do SomeWork started.");
             Log.d("MainActivity", text);
-            return "OK";
+            return "RETURN of doSomeWork";
         }
     }
 
